@@ -57,5 +57,5 @@ const server = http.createServer((req, res) => {
     res.end("File not found");
   }
 });
-
-server.listen(8000, "0.0.0.0");
+const PORT = process.env.PORT || 3000;
+server.listen(PORT, ()=>{console.log("Server is running)});
