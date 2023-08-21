@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ=="
+  crossorigin="anonymous"
+  referrerpolicy="no-referrer"
+/> 
+<script
+  src="https://cdn.jsdelivr.net/npm/sweetalert2@11.4.19/dist/sweetalert2.all.min.js"
+  defer
+></script>
+<script
+  src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"
+  defer
+></script>
+<style>
+  @import url("https://v1.fontapi.ir/css/ShabnamFD:500;700?n=shabanm");
+@import url("https://fonts.googleapis.com/css2?family=Kaushan+Script&family=Poppins:wght@500;700&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+html {
+  height: 100vh;
+}
+body {
+  position: relative;
+  font-family: "Poppins", sans-serif;
+  line-height: 1.5em;
+  overflow: hidden;
+}
+.wrapper {
+  position: relative;
+  background-image: linear-gradient(skyBlue 70%, dodgerBlue);
+  overflow: hidden;
+  width: 100%;
+  height: 100%;
+}
+
+.cloud2 {
+  position: absolute;
+  bottom: 40%;
+  left: -50%;
+  z-index: 5;
+  opacity: 0;
+  transition: all 1s;
+}
+.cloud1 {
+  position: absolute;
+  bottom: 20%;
+  right: -50%;
+  z-index: 5;
+  opacity: 0;
+  transition: all 1s;
+}
+.cloudMove2 {
+  left: 0;
+  opacity: 1;
+}
+.cloudMove1 {
+  right: 0;
+  opacity: 1;
+}
+.sun {
+  position: absolute;
+  background-color: #f2ef88;
+  height: 70vw;
+  width: 70vw;
+  box-shadow: 0 0 90px #f2ef88;
+  border-radius: 50%;
+  bottom: -160%;
+  left: 15%;
+  opacity: 0;
+  z-index: 2;
+  transition: all 1s ease;
+}
+.highNoonSun {
+  bottom: 30%;
+  opacity: 1;
+}
+.moon {
+  position: absolute;
+  background-color: #d6d6d6;
+  height: 40vw;
+  width: 40vw;
+  box-shadow: inset -20px 5px 0 0px #899098, 0 0 30px whitesmoke;
+  border-radius: 50%;
+  top: -55%;
+  left: -40%;
+  opacity: 0;
+  z-index: 2;
+  transition: all 1s 0s ease-in-out;
+}
+.fullMoon {
+  top: 5%;
+  left: 1%;
+  opacity: 1;
+}
+.moon div:nth-child(n) {
+  position: relative;
+  background-color: #b9b8b0;
+  border-radius: 50%;
+  box-shadow: inset -4px 5px 0 0px #535457;
+}
+.moon div:nth-child(1) {
+  top: 25%;
+  left: 12%;
+  width: 27%;
+  height: 27%;
+}
+.moon div:nth-child(2) {
+  top: 25%;
+  left: 44%;
+  width: 16%;
+  height: 16%;
+}
+.moon div:nth-child(3) {
+  top: -30%;
+  left: 60%;
+  width: 16%;
+  height: 16%;
+}
+.stars {
+  box-shadow: 0 0 10px whitesmoke;
+  opacity: 0;
+  animation: wink 2s infinite alternate;
+}
+.wrapper > div:nth-child(1) {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  width: 0.4vw;
+  height: 0.4vw;
+  left: 80vw;
+  top: 30%;
+  transition: all 0.5s ease;
+}
+.wrapper > div:nth-child(2) {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  width: 0.9vw;
+  height: 0.9vw;
+  left: 95vw;
+  top: 70%;
+  transition: all 0.5s ease;
+}
+.wrapper > div:nth-child(3) {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 1.2vw;
+  height: 1.2vw;
+  left: 70vw;
+  top: 20%;
+  transition: all 0.5s ease;
+}
+.wrapper > div:nth-child(4) {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 2vw;
+  height: 2vw;
+  left: 80vw;
+  top: 55%;
+  transition: all 0.5s ease;
+}
+.wrapper > div:nth-child(5) {
+  position: absolute;
+  background-color: white;
+  border-radius: 50%;
+  overflow: hidden;
+  width: 0.7vw;
+  height: 0.7vw;
+  left: 90vw;
+  top: 35%;
+  transition: all 0.5s ease;
+}
+.weather_container {
+  position: relative;
+  width: 400px;
+  margin: 40px auto;
+  padding: 20px;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0.6);
+  color: black;
+  border-radius: 5px;
+  z-index: 10;
+}
+.lang_btn {
+  background-color: #d3d3d345;
+  position: absolute;
+  top: 6px;
+  right: 2%;
+  font-size: 12px;
+  padding: 0px 4.5px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.lang_btn:hover {
+  background-color: #d3d3d360;
+}
+.dark_mode_btn {
+  background-color: #d3d3d345;
+  position: absolute;
+  top: 6px;
+  left: 2%;
+  font-size: 12px;
+  padding: 0px 6px;
+  border-radius: 3px;
+  cursor: pointer;
+  transition: all 0.5s;
+}
+.dark_mode_btn:hover {
+  background-color: #d3d3d360;
+}
+.weather_search {
+  position: relative;
+  width: 90%;
+  margin: 10px auto;
+}
+.search_input {
+  background: whitesmoke;
+  width: 100%;
+  padding: 15px 60px 15px 15px;
+  border: none;
+  outline: none;
+  border-radius: 50px;
+}
+.search_btn {
+  position: absolute;
+  top: 7%;
+  right: 1%;
+  width: 40px;
+  height: 40px;
+  background: #e0e0e0;
+  border-radius: 50%;
+  border: none;
+  transition: all 0.5s;
+}
+.search_btn:hover {
+  background: #cdcdcd;
+  cursor: pointer;
+  text-align: center;
+}
+.weather_body {
+  background-color: rgba(255, 255, 255, 0.5);
+  padding: 20px 10px;
+  border-radius: 5px;
+  font-size: 25px;
+  font-weight: bold;
+}
+.weather_body > div {
+  margin-top: 10px;
+}
+h1 {
+  margin-top: 30px;
+}
+.more_info_btn_wrapper {
+  margin-top: 30px;
+  font-size: 15px;
+  border-bottom: 1px solid #8e8d8d;
+}
+.more_info_btn {
+  color: black;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+.rotate {
+  transform: rotate(180deg);
+}
+.more_info {
+  display: none;
+  align-items: center;
+  justify-content: space-between;
+}
+.active {
+  display: flex;
+}
+.more_info_item {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  flex: 1;
+  padding: 0 20px;
+  margin-top: 10px;
+}
+.more_info_item > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.dark_bg {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+.dark_txt {
+  color: white;
+}
+@keyframes wink {
+  25% {
+    transform: scale(1.3);
+  }
+  75% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.2);
+  }
+}
+
+</style>
+</head>
+<body>
+<div class="wrapper" style="height: 100vh !important">
+      <div class="stars"></div>
+      <div class="stars"></div>
+      <div class="stars"></div>
+      <div class="stars"></div>
+      <div class="stars"></div>
+      <div class="sky"></div>
+      <div class="cloud1"></div>
+      <div class="cloud2"></div>
+      <div class="sun highNoonSun"></div>
+      <div class="moon">
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="weather_container">
+        <div class="dark_mode_btn"><i class="fas fa-sun"></i></div>
+        <div class="lang_btn">EN</div>
+        <div class="weather_search">
+          <input
+            type="text"
+            class="search_input"
+            autocomplete="off"
+            placeholder="Search your location..."
+          />
+          <button class="search_btn"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="weather_body">
+          <div class="location">{%City%}, {%Country%}</div>
+          <div class="date"></div>
+          <div class="temp"><h1>{%Temp%} &deg;C</h1></div>
+          <div class="weather_icon" id="">
+            <lottie-player
+              src="https://assets3.lottiefiles.com/private_files/lf30_tzxtv5wy.json"
+              background="transparent"
+              speed="1"
+              style="width: 150px; height: 150px; margin: 0 auto"
+              loop
+              autoplay
+            ></lottie-player>
+            
+          </div>
+          <div class="weather"></div>
+          <div class="more_info_btn_wrapper">
+            <div class="more_info_txt">Current Location</div>
+            <button class="more_info_btn" disabled="true">
+              <i class="fas fa-arrow-circle-right"></i>
+            </button>
+          </div>
+          
+        </div>
+      </div>
+    <!-- <h1 style="text-align: center;">WEATHER APP</h1> -->
+    </div>
+</body>
+
+<script>
+      ///////////////////////////
+///variables
+let isLightMode;
+const hours = new Date().getHours();
+const isDayTime = hours > 6 && hours < 20;
+const body = document.body;
+const lang = document.querySelector(".lang_btn");
+const infoButton = document.querySelector(".more_info_btn");
+const info = document.querySelector(".more_info");
+const searchInput = document.querySelector(".search_input");
+const searchButton = document.querySelector(".search_btn");
+const city = document.querySelector(".location");
+const date = document.querySelector(".date");
+const temperature = document.querySelector(".temp");
+const WeatherType = document.querySelector(".weather");
+const maxTemperature = document.querySelector(".max_temp");
+const minTemperature = document.querySelector(".min_temp");
+const maxTemperatureTitle = document.querySelector(".max_temp_title");
+const minTemperatureTitle = document.querySelector(".min_temp_title");
+const windDegree = document.querySelector(".wind_degree");
+const windSpeed = document.querySelector(".wind_speed");
+const windDegreeTitle = document.querySelector(".wind_degree_title");
+const windSpeedTitle = document.querySelector(".wind_speed_title");
+const weatherIcon = document.querySelector(".weather_icon");
+const infoText = document.querySelector(".more_info_txt");
+const darkMode = document.querySelector(".dark_mode_btn");
+const weatherCard = document.querySelector(".weather_container");
+const weatherCardBody = document.querySelector(".weather_body");
+const cloud1 = document.querySelector(".cloud1");
+const cloud2 = document.querySelector(".cloud2");
+const sky = document.querySelector(".wrapper");
+const sun = document.querySelector(".sun");
+const moon = document.querySelector(".moon");
+const stars = document.querySelectorAll(".stars");
+
+
+/////////////////////////
+
+// 0)
+const assets = [
+    {
+      id: "Clear",
+      icon_day:
+        "https://assets10.lottiefiles.com/private_files/lf30_moaf5wp5.json",
+      icon_night:
+        "https://assets2.lottiefiles.com/private_files/lf30_iugenddu.json",
+      cloud: "",
+    },
+    {
+      id: "Clouds",
+      icon_day:
+        "https://assets2.lottiefiles.com/private_files/lf30_ykkzuozu.json",
+      icon_night:
+        "https://assets2.lottiefiles.com/private_files/lf30_5tzqguri.json",
+      cloud: "https://assets10.lottiefiles.com/temp/lf20_VAmWRg.json",
+    },
+    {
+      id: "Haze",
+      icon_day:
+        "https://assets2.lottiefiles.com/private_files/lf30_jvkyx6tg.json",
+      icon_night:
+        "https://assets2.lottiefiles.com/private_files/lf30_qqhrsksk.json",
+      cloud: "https://assets10.lottiefiles.com/temp/lf20_VAmWRg.json",
+    },
+    {
+      id: "Rain",
+      icon_day:
+        "https://assets2.lottiefiles.com/private_files/lf30_rb778uhf.json",
+      icon_night:
+        "https://assets2.lottiefiles.com/private_files/lf30_jr9yjlcf.json",
+      cloud: "https://assets7.lottiefiles.com/private_files/lf30_orqfuyox.json",
+    },
+    {
+      id: "Snow",
+      icon_day:
+        "https://assets2.lottiefiles.com/private_files/lf30_w5u9xr3a.json",
+      icon_night:
+        "https://assets2.lottiefiles.com/private_files/lf30_9bptg8sh.json",
+      cloud: "https://assets3.lottiefiles.com/temp/lf20_WtPCZs.json",
+    },
+    {
+      id: "Thunderstorm",
+      icon_day:
+        "https://assets2.lottiefiles.com/private_files/lf30_kj3arjju.json",
+      icon_night:
+        "https://assets2.lottiefiles.com/private_files/lf30_22gtsfnq.json",
+      cloud: "https://assets4.lottiefiles.com/packages/lf20_kw1r63j7.json",
+    },
+  ];
+
+  // thunderstrom - 1282, 1279, 1276
+  // snow - 1264, 1261, 1258, 1255, 1252, 1249, %% 1237, 1225, 1222, 1219, 1216, 1213, 1210, 1207, 1204
+  // Rain - 1246, 1243, 1240 %% 1201, 1198, 1195, 1192, 1189, 1186, 1183, 1180, 1171, 1168, 
+  // Haze - 1063. 1066, 1069, 1072, 1087, 1114, 1117, 1135, 1147, 1150, 1153, 
+  // Clouds - 1006, 1009, 1030
+  // Clear - 1000
+
+// 1)
+// date.innerHTML = new Date().toLocaleDateString("en", {
+//     weekday: "long",
+//     month: "long",
+//     day: "numeric",
+//   });
+
+// 2_
+// city.innerHTML = `${weather.name} , ${weather.sys.country}`;
+
+// 3)
+// temperature.innerHTML = `<h1>${Math.round(weather.main.temp)}&deg;C</h1>`;
+// WeatherType.innerHTML = ``;
+
+// 4)
+// weatherIcon.innerHTML = lottie
+
+// 5)
+// assets.forEach((item) => {
+//     if (weather.weather[0].main === item.id) {
+//       isLightMode
+//         ? (weatherIcon.innerHTML = `<lottie-player src="${item.icon_day}"  background="transparent"  speed="1"  style="width: 150px; height: 150px; margin: 0 auto"  loop  autoplay></lottie-player>`)
+//         : (weatherIcon.innerHTML = `<lottie-player src="${item.icon_night}"  background="transparent"  speed="1"  style="width: 150px; height: 150px; margin: 0 auto"  loop  autoplay></lottie-player>`);
+//       cloud1.innerHTML = `<lottie-player
+//       src="${item.cloud}"
+//       background="transparent"
+//       speed="0.5"
+//       style="width: 400px; height: 400px"
+//       loop
+//       autoplay
+//     ></lottie-player>`;
+//       cloud2.innerHTML = `<lottie-player
+//       src="${item.cloud}"
+//       background="transparent"
+//       speed="0.5"
+//       style="width: 300px; height: 300px"
+//       loop
+//       autoplay
+//     ></lottie-player>`;
+//     }
+//   });
+
+setTimeout(() => {
+  cloud1.classList.add("cloudMove1");
+  cloud2.classList.add("cloudMove2");
+}, 1000);
+
+// getting day #
+
+const currDate = new Date();  
+const day = currDate.toLocaleString('en-us', {weekday:'long'});
+const month = currDate.toLocaleString('en-us', { month: 'long' });
+const dayNum = currDate.getDate();
+date.innerHTML = `${day}, ${month} ${dayNum}`
+
+//handle dayTime for default dark or light mode
+isDayTime ? (isLightMode = true) : (isLightMode = false);
+if (!isLightMode) handleDarkMode();
+
+//get weather data from server and api error handling
+// ......
+//key and mouse event on searchbar to search
+searchInput.addEventListener("keypress", (event) => {
+  if (event.keyCode === 13) {
+    renderWeatherAsync(searchInput.value);
+  }
+});
+//or
+
+//////////////////////////
+//dark and light mode
+function handleDarkMode() {
+  darkMode.classList.toggle("dark_txt");
+  if (darkMode.classList.contains("dark_txt")) {
+    isLightMode = false;
+    darkMode.innerHTML = `<i class="fas fa-moon"></i>`;
+    sky.style.backgroundImage = "linear-gradient(#2a2c36 70%, #121318)";
+    stars.forEach((star) => {
+      star.style.opacity = 1;
+      sun.classList.remove("highNoonSun");
+      moon.classList.add("fullMoon");
+    });
+  } else {
+    isLightMode = true;
+    darkMode.innerHTML = `<i class="fas fa-sun"></i>`;
+    sky.style.backgroundImage = "linear-gradient(skyBlue 70%, dodgerBlue)";
+    moon.classList.remove("fullMoon");
+    sun.classList.add("highNoonSun");
+    stars.forEach((star) => {
+      star.style.opacity = 0;
+    });
+  }
+  weatherCard.classList.toggle("dark_bg");
+  weatherCardBody.classList.toggle("dark_bg");
+  lang.classList.toggle("dark_txt");
+  weatherCardBody.classList.toggle("dark_txt");
+  infoButton.classList.toggle("dark_txt");
+  if (searchInput.value != "") renderWeatherAsync(searchInput.value);
+}
+darkMode.addEventListener("click", handleDarkMode);
+const assestOperate = (code)=>{
+  assets.forEach((item) => {
+    if (code == item.id) {
+      isLightMode
+        ? (weatherIcon.innerHTML = `<lottie-player src="${item.icon_day}"  background="transparent"  speed="1"  style="width: 150px; height: 150px; margin: 0 auto"  loop  autoplay></lottie-player>`)
+        : (weatherIcon.innerHTML = `<lottie-player src="${item.icon_night}"  background="transparent"  speed="1"  style="width: 150px; height: 150px; margin: 0 auto"  loop  autoplay></lottie-player>`);
+      cloud1.innerHTML = `<lottie-player
+      src="${item.cloud}"
+      background="transparent"
+      speed="0.5"
+      style="width: 400px; height: 400px"
+      loop
+      autoplay
+    ></lottie-player>`;
+      cloud2.innerHTML = `<lottie-player
+      src="${item.cloud}"
+      background="transparent"
+      speed="0.5"
+      style="width: 300px; height: 300px"
+      loop
+      autoplay
+    ></lottie-player>`;
+    }
+  });
+}
+const tempStatus = "{%status%}"
+console.log(tempStatus);
+assets.forEach((item) => {
+    if (tempStatus == item.id) {
+      isLightMode
+        ? (weatherIcon.innerHTML = `<lottie-player src="${item.icon_day}"  background="transparent"  speed="1"  style="width: 150px; height: 150px; margin: 0 auto"  loop  autoplay></lottie-player>`)
+        : (weatherIcon.innerHTML = `<lottie-player src="${item.icon_night}"  background="transparent"  speed="1"  style="width: 150px; height: 150px; margin: 0 auto"  loop  autoplay></lottie-player>`);
+      cloud1.innerHTML = `<lottie-player
+      src="${item.cloud}"
+      background="transparent"
+      speed="0.5"
+      style="width: 400px; height: 400px"
+      loop
+      autoplay
+    ></lottie-player>`;
+      cloud2.innerHTML = `<lottie-player
+      src="${item.cloud}"
+      background="transparent"
+      speed="0.5"
+      style="width: 300px; height: 300px"
+      loop
+      autoplay
+    ></lottie-player>`;
+    }
+  });
+
+</script>
+</html>
